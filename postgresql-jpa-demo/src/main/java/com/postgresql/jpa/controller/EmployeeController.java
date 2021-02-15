@@ -30,8 +30,20 @@ public class EmployeeController {
 	}
 	
 	@GetMapping(value = "/averageSalary")
-	public Long totalEntry(){
-		return emprepository.getAverageSalary();
+	public Long avgSalary(){
+		//return emprepository.getAverageSalary();
+		List<Employee> list = new ArrayList<Employee>();
+		list = emprepository.findAll();
+		int entry = list.size();
+		Long salary = (long) 0;
+		for(int i=0; i<list.size(); i++) {
+			if(list.get(i).getSalary() == null) {
+				entry--;
+			}else {
+				salary += list.get(i).getSalary();
+			}
+		}		
+		return salary/entry;
 	}
 	
 	@PostMapping(value = "/update")
